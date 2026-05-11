@@ -64,17 +64,17 @@
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 100;
-    padding: 1.25rem 3rem;
+    padding: 0.85rem 3rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     transition: all 0.4s ease;
-    background: rgba(244, 237, 224, 0.85);
+    background: rgba(244, 237, 224, 0.92);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid transparent;
   }
   nav.scrolled {
-    padding: 0.85rem 3rem;
+    padding: 0.6rem 3rem;
     background: rgba(244, 237, 224, 0.98);
     border-bottom-color: var(--line);
     box-shadow: 0 4px 20px rgba(20,32,54,0.06);
@@ -85,14 +85,20 @@
     gap: 0.75rem;
     text-decoration: none;
     color: var(--navy);
+    position: relative;
+    z-index: 2;
   }
   .logo-img {
-    height: 52px;
+    height: 70px;
     width: auto;
     display: block;
     transition: height 0.4s ease;
   }
-  nav.scrolled .logo-img { height: 44px; }
+  nav.scrolled .logo-img { height: 58px; }
+  @media (max-width: 768px) {
+    .logo-img { height: 56px; }
+    nav.scrolled .logo-img { height: 48px; }
+  }
   .nav-links {
     display: flex;
     gap: 2.25rem;
@@ -150,8 +156,8 @@
   }
 
   @media (max-width: 1000px) {
-    nav { padding: 1rem 1.5rem; }
-    nav.scrolled { padding: 0.7rem 1.5rem; }
+    nav { padding: 0.6rem 1.5rem; }
+    nav.scrolled { padding: 0.5rem 1.5rem; }
     .nav-links {
       position: fixed;
       top: 0; right: -100%;
@@ -609,8 +615,8 @@
   }
 
   .service-visual {
-    aspect-ratio: 16/10;
-    background: var(--navy-deep);
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 100%);
     position: relative;
     overflow: hidden;
     border-bottom: 3px solid var(--beige-deep);
@@ -622,18 +628,32 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     transition: transform 0.7s cubic-bezier(.4,0,.2,1);
   }
+  .service-visual.portrait img.service-photo {
+    object-fit: contain;
+    padding: 1rem;
+    background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 100%);
+  }
   .service-card:hover .service-photo {
-    transform: scale(1.07);
+    transform: scale(1.05);
+  }
+  .service-card:hover .service-visual.portrait .service-photo {
+    transform: scale(1.02);
   }
   .service-visual::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(20,32,54,0.45) 0%, rgba(20,32,54,0.15) 40%, rgba(20,32,54,0.6) 100%);
+    background: linear-gradient(180deg, rgba(20,32,54,0.08) 0%, rgba(20,32,54,0) 50%, rgba(20,32,54,0.15) 100%);
     pointer-events: none;
     z-index: 1;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .service-card:hover .service-visual::after {
+    opacity: 1;
   }
   .service-visual .visual-corner,
   .service-visual .visual-arrow { z-index: 3; }
@@ -755,123 +775,61 @@
   .gallery-wrap { max-width: 1500px; margin: 0 auto; }
   .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-auto-rows: 200px;
-    gap: 1rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
     margin-top: 4rem;
   }
   .gallery-item {
     position: relative;
     overflow: hidden;
-    border-radius: 6px;
-    cursor: pointer;
-    background: var(--navy-deep);
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 100%);
     border: 1px solid var(--line);
     box-shadow: 0 4px 16px rgba(20,32,54,0.06);
-    transition: transform 0.5s cubic-bezier(.4,0,.2,1), box-shadow 0.5s;
+    transition: transform 0.5s cubic-bezier(.4,0,.2,1), box-shadow 0.5s, border-color 0.4s;
+    aspect-ratio: 4/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .gallery-item:hover {
     transform: translateY(-6px);
     box-shadow: 0 25px 50px rgba(20,32,54,0.18);
+    border-color: var(--navy);
   }
   .gallery-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     transition: transform 0.7s cubic-bezier(.4,0,.2,1);
     display: block;
   }
-  .gallery-item:hover img { transform: scale(1.08); }
-  .gallery-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(20,32,54,0) 30%, rgba(20,32,54,0.95) 100%);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 1.5rem;
-    z-index: 2;
-    pointer-events: none;
-    transition: background 0.4s;
-  }
-  .gallery-item:hover .gallery-overlay {
-    background: linear-gradient(180deg, rgba(20,32,54,0.1) 0%, rgba(20,32,54,0.95) 100%);
-  }
-  .gallery-tag {
-    font-family: 'Oswald', sans-serif;
-    font-weight: 700;
-    font-size: 0.65rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--beige);
-    margin-bottom: 0.4rem;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.4s 0.05s;
-  }
-  .gallery-title {
-    font-family: 'Oswald', sans-serif;
-    font-weight: 700;
-    font-size: 1.2rem;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    color: var(--beige-bright);
-    line-height: 1.1;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.4s 0.1s;
-  }
-  .gallery-item:hover .gallery-tag,
-  .gallery-item:hover .gallery-title {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .gallery-badge {
-    position: absolute;
-    top: 1rem; left: 1rem;
-    background: rgba(20,32,54,0.85);
-    border: 1px solid var(--beige-deep);
-    color: var(--beige-bright);
-    padding: 0.35rem 0.7rem;
-    border-radius: 3px;
-    font-family: 'Oswald', sans-serif;
-    font-weight: 700;
-    font-size: 0.62rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    z-index: 3;
-    backdrop-filter: blur(8px);
-  }
+  .gallery-item:hover img { transform: scale(1.05); }
 
-  /* Bento layout */
-  .g-big-wide { grid-column: span 8; grid-row: span 2; }
-  .g-tall { grid-column: span 4; grid-row: span 2; }
-  .g-wide { grid-column: span 6; grid-row: span 2; }
-  .g-square { grid-column: span 3; grid-row: span 2; }
-  .g-half { grid-column: span 6; grid-row: span 2; }
+  /* Portrait-orientation tiles use contain so the whole image shows */
+  .gallery-item.portrait {
+    aspect-ratio: 3/4;
+    background: linear-gradient(135deg, #f4ede0 0%, #ebe2cf 100%);
+  }
+  .gallery-item.portrait img {
+    object-fit: contain;
+    padding: 0.5rem;
+  }
 
   @media (max-width: 1000px) {
     .gallery-grid {
-      grid-template-columns: repeat(6, 1fr);
-      grid-auto-rows: 180px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
     }
-    .g-big-wide { grid-column: span 6; grid-row: span 2; }
-    .g-tall { grid-column: span 3; grid-row: span 2; }
-    .g-wide { grid-column: span 6; grid-row: span 2; }
-    .g-square { grid-column: span 3; grid-row: span 2; }
-    .g-half { grid-column: span 6; grid-row: span 2; }
   }
   @media (max-width: 600px) {
     .gallery-grid {
       grid-template-columns: 1fr;
-      grid-auto-rows: 220px;
-      gap: 0.85rem;
+      gap: 1rem;
     }
-    .g-big-wide, .g-tall, .g-wide, .g-square, .g-half {
-      grid-column: span 1; grid-row: span 1;
-    }
-    .gallery-tag, .gallery-title { opacity: 1; transform: translateY(0); }
-    .gallery-overlay { background: linear-gradient(180deg, rgba(20,32,54,0.1) 0%, rgba(20,32,54,0.9) 100%); }
+    .gallery-item, .gallery-item.portrait { aspect-ratio: 4/3; }
+    .gallery-item.portrait img { object-fit: cover; padding: 0; }
   }
 
   /* ====== PROCESS ====== */
@@ -1185,134 +1143,137 @@
   }
   .map-visual {
     aspect-ratio: 4/3;
-    border-radius: 6px;
+    border-radius: 14px;
     background: var(--navy-deep);
     border: 1px solid var(--line);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 20px 50px var(--shadow);
+    box-shadow: 0 25px 60px rgba(20,32,54,0.25);
   }
-  .map-visual svg { width: 100%; height: 100%; display: block; }
+  .map-iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    filter: saturate(1.1);
+  }
   .map-badge {
     position: absolute;
     top: 1rem; left: 1rem;
-    background: rgba(20,32,54,0.9);
-    border: 1px solid var(--beige-deep);
+    background: #fff;
+    border-left: 4px solid var(--navy);
     border-radius: 4px;
-    padding: 0.7rem 0.9rem;
+    padding: 0.75rem 1rem;
     z-index: 3;
-    backdrop-filter: blur(10px);
     font-family: 'Oswald', sans-serif;
+    box-shadow: 0 8px 24px rgba(20,32,54,0.18);
   }
   .map-badge-label {
-    font-size: 0.62rem;
+    font-size: 0.6rem;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: var(--beige);
+    color: var(--steel);
     font-weight: 700;
     margin-bottom: 0.15rem;
   }
   .map-badge-region {
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 700;
-    color: var(--beige-bright);
+    color: var(--navy);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     line-height: 1;
   }
   .map-badge-sub {
     font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    color: var(--concrete-light);
+    letter-spacing: 0.12em;
+    color: var(--steel);
     text-transform: uppercase;
-    margin-top: 0.3rem;
+    margin-top: 0.35rem;
     font-weight: 600;
   }
-  .map-compass {
+
+  /* CTA pill on the map */
+  .map-cta {
     position: absolute;
     top: 1rem; right: 1rem;
-    width: 50px; height: 50px;
     z-index: 3;
-    background: rgba(20,32,54,0.9);
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
+    color: var(--beige-bright);
     border: 1px solid var(--beige-deep);
+    border-radius: 100px;
+    padding: 0.55rem 1rem 0.55rem 0.55rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    box-shadow: 0 10px 24px rgba(20,32,54,0.3);
+    transition: all 0.3s cubic-bezier(.4,0,.2,1);
+    font-family: 'Oswald', sans-serif;
+  }
+  .map-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(20,32,54,0.4);
+    background: linear-gradient(135deg, var(--navy-soft) 0%, var(--blue) 100%);
+  }
+  .map-cta-icon {
+    width: 30px; height: 30px;
+    background: var(--beige);
+    color: var(--navy);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    backdrop-filter: blur(10px);
+    animation: phoneRing 2s ease-in-out infinite;
+    flex-shrink: 0;
   }
-  .map-pin {
+  .map-cta-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+  .map-cta-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    color: var(--beige);
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .map-cta-number {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--beige-bright);
+    letter-spacing: 0.02em;
+    margin-top: 0.1rem;
+  }
+
+  /* "Open in Google Maps" link bottom-right */
+  .map-open-link {
     position: absolute;
-    z-index: 2;
-    transform: translate(-50%, -50%);
-  }
-  .map-pin-dot {
-    width: 12px; height: 12px;
-    background: var(--beige);
-    border-radius: 50%;
-    box-shadow: 0 0 0 0 rgba(217,201,168,0.7), 0 0 12px var(--beige);
-    animation: pingPulse 2.5s infinite;
-    border: 2px solid var(--navy-deep);
-  }
-  .map-pin-label {
-    position: absolute;
-    left: 16px; top: 50%;
-    transform: translateY(-50%);
-    background: rgba(20,32,54,0.95);
-    border: 1px solid var(--beige-deep);
-    padding: 0.25rem 0.55rem;
-    border-radius: 3px;
+    bottom: 1rem; right: 1rem;
+    z-index: 3;
+    background: #fff;
+    color: var(--navy);
+    border-radius: 4px;
+    padding: 0.5rem 0.75rem;
+    text-decoration: none;
     font-family: 'Oswald', sans-serif;
     font-size: 0.7rem;
     font-weight: 700;
-    color: var(--beige-bright);
-    letter-spacing: 0.1em;
     text-transform: uppercase;
-    white-space: nowrap;
-    backdrop-filter: blur(6px);
-  }
-  .map-pin.flag-right .map-pin-label {
-    left: auto; right: 16px;
-  }
-  .map-pin.hq .map-pin-dot {
-    width: 16px; height: 16px;
-    background: var(--beige-bright);
-    box-shadow: 0 0 0 0 rgba(232,217,184,0.8), 0 0 20px var(--beige);
-  }
-  .map-pin.hq .map-pin-label {
-    background: var(--beige);
-    color: var(--navy);
-    border-color: var(--beige);
-    font-weight: 700;
-  }
-  @keyframes pingPulse {
-    0% { box-shadow: 0 0 0 0 rgba(232,217,184,0.6), 0 0 12px var(--beige); }
-    70% { box-shadow: 0 0 0 18px rgba(232,217,184,0), 0 0 12px var(--beige); }
-    100% { box-shadow: 0 0 0 0 rgba(232,217,184,0), 0 0 12px var(--beige); }
-  }
-  .map-scale {
-    position: absolute;
-    bottom: 1rem; left: 1rem;
-    z-index: 3;
-    background: rgba(20,32,54,0.9);
-    border: 1px solid var(--beige-deep);
-    border-radius: 4px;
-    padding: 0.5rem 0.7rem;
-    font-family: 'Oswald', sans-serif;
-    font-weight: 700;
-    font-size: 0.65rem;
-    color: var(--concrete-light);
-    letter-spacing: 0.15em;
-    backdrop-filter: blur(6px);
+    letter-spacing: 0.12em;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.45rem;
+    box-shadow: 0 6px 16px rgba(20,32,54,0.18);
+    transition: all 0.3s;
   }
-  .map-scale::before {
-    content: '';
-    width: 40px;
-    height: 2px;
-    background: var(--beige);
+  .map-open-link:hover {
+    background: var(--navy);
+    color: var(--beige-bright);
+    transform: translateY(-2px);
   }
 
   /* ====== FAQ ====== */
@@ -1559,29 +1520,9 @@
   .reveal.in { opacity: 1; transform: translateY(0); }
 
   /* ====== MOBILE FLOATING CALL BUTTON ====== */
-  .mobile-call {
-    display: none;
-    position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    width: 62px; height: 62px;
-    border-radius: 50%;
-    background: var(--navy);
-    color: var(--beige-bright);
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    z-index: 99;
-    box-shadow: 0 10px 30px var(--shadow);
-    animation: callPulse 2s infinite;
-  }
-  @keyframes callPulse {
-    0%, 100% { box-shadow: 0 10px 30px var(--shadow); }
-    50% { box-shadow: 0 10px 30px var(--shadow), 0 0 0 10px rgba(28,46,74,0.15); }
-  }
-  @media (max-width: 1000px) { .mobile-call { display: flex; } }
+  .mobile-call { display: none !important; } /* replaced by chat-call-btn that's always visible */
 
-  /* ====== CHATBOT ====== */
+  /* ====== CHATBOT — PREMIUM ====== */
   .chatbot-launcher {
     position: fixed;
     bottom: 1.5rem;
@@ -1592,52 +1533,142 @@
     align-items: flex-end;
     gap: 0.75rem;
   }
-  @media (max-width: 1000px) {
-    .chatbot-launcher { bottom: 6rem; right: 1.5rem; }
+
+  /* Stack: chat button on top, call button below (always visible) */
+  .chat-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
   }
-  .chat-toggle {
-    width: 64px; height: 64px;
-    border-radius: 50%;
+
+  /* Call CTA button (under chat, both desktop + mobile) */
+  .chat-call-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.85rem 1.3rem;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
+    color: var(--beige-bright);
+    border-radius: 100px;
+    text-decoration: none;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 0.88rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    box-shadow: 0 10px 30px rgba(20,32,54,0.35), 0 0 0 2px rgba(232,217,184,0.2);
+    border: 2px solid var(--beige-deep);
+    transition: all 0.4s cubic-bezier(.4,0,.2,1);
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .chat-call-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--beige) 0%, var(--beige-bright) 100%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    z-index: 0;
+  }
+  .chat-call-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 45px rgba(20,32,54,0.45), 0 0 0 2px var(--beige);
+    color: var(--navy);
+  }
+  .chat-call-btn:hover::before { opacity: 1; }
+  .chat-call-btn > * { position: relative; z-index: 1; }
+  .chat-call-btn .phone-icon-wrap {
+    width: 28px; height: 28px;
     background: var(--beige);
-    border: 2px solid var(--navy);
+    color: var(--navy);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: phoneRing 2s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  @keyframes phoneRing {
+    0%, 100% { transform: rotate(0deg); }
+    10%, 30% { transform: rotate(-12deg); }
+    20%, 40% { transform: rotate(12deg); }
+    50% { transform: rotate(0deg); }
+  }
+  .chat-call-btn:hover .phone-icon-wrap {
+    background: var(--navy);
+    color: var(--beige-bright);
+  }
+
+  /* Chat launcher button — premium glassmorphism */
+  .chat-toggle {
+    width: 68px; height: 68px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--beige-bright) 0%, var(--beige) 50%, var(--beige-deep) 100%);
+    border: 2px solid rgba(255,255,255,0.4);
     color: var(--navy);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 10px 30px var(--shadow);
+    box-shadow:
+      0 15px 40px rgba(20,32,54,0.35),
+      0 0 0 4px rgba(232,217,184,0.25),
+      inset 0 2px 8px rgba(255,255,255,0.4);
     transition: all 0.4s cubic-bezier(.4,0,.2,1);
     position: relative;
-    animation: chatAttract 4s ease-in-out infinite;
+    animation: chatAttract 3.5s ease-in-out infinite;
   }
   @keyframes chatAttract {
-    0%, 100% { transform: scale(1); box-shadow: 0 10px 30px var(--shadow); }
-    50% { transform: scale(1.08); box-shadow: 0 15px 40px var(--shadow), 0 0 0 8px rgba(217,201,168,0.3); }
+    0%, 100% {
+      transform: scale(1);
+      box-shadow:
+        0 15px 40px rgba(20,32,54,0.35),
+        0 0 0 4px rgba(232,217,184,0.25),
+        inset 0 2px 8px rgba(255,255,255,0.4);
+    }
+    50% {
+      transform: scale(1.06);
+      box-shadow:
+        0 20px 50px rgba(20,32,54,0.45),
+        0 0 0 10px rgba(217,201,168,0.2),
+        inset 0 2px 8px rgba(255,255,255,0.4);
+    }
   }
   .chat-toggle:hover {
-    background: var(--beige-bright);
-    transform: scale(1.1);
+    transform: scale(1.12);
     animation-play-state: paused;
   }
   .chat-toggle svg { transition: transform 0.4s; }
   .chat-toggle.open svg.icon-chat { display: none; }
   .chat-toggle.open svg.icon-close { display: block; }
   .chat-toggle svg.icon-close { display: none; }
-  .chat-notif {
-    position: absolute;
-    top: -6px; right: -6px;
-    width: 22px; height: 22px;
+  .chat-toggle.open {
     background: var(--navy);
     color: var(--beige-bright);
-    border-radius: 50%;
+    border-color: var(--beige);
+    animation: none;
+  }
+
+  .chat-notif {
+    position: absolute;
+    top: -4px; right: -4px;
+    min-width: 24px; height: 24px;
+    padding: 0 7px;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: #fff;
+    border-radius: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 700;
-    font-family: 'Oswald', sans-serif;
-    border: 2px solid var(--beige);
-    animation: notifPulse 2s ease-in-out infinite;
+    font-family: 'Inter', sans-serif;
+    border: 2px solid var(--cream);
+    box-shadow: 0 4px 12px rgba(239,68,68,0.4);
+    animation: notifPulse 1.5s ease-in-out infinite;
   }
   @keyframes notifPulse {
     0%, 100% { transform: scale(1); }
@@ -1645,44 +1676,60 @@
   }
   .chat-toggle.open .chat-notif { display: none; }
 
+  /* Teaser bubble — more polished */
   .chat-teaser {
     background: #fff;
     color: var(--navy);
-    padding: 0.75rem 1rem;
-    border-radius: 12px 12px 4px 12px;
-    font-size: 0.85rem;
+    padding: 0.85rem 1.1rem;
+    border-radius: 16px 16px 4px 16px;
+    font-size: 0.88rem;
     font-weight: 500;
-    box-shadow: 0 10px 30px var(--shadow);
-    max-width: 220px;
-    line-height: 1.4;
+    box-shadow: 0 15px 40px rgba(20,32,54,0.2);
+    max-width: 240px;
+    line-height: 1.45;
     border: 1px solid var(--line);
     animation: teaserBob 3s ease-in-out infinite;
-    transition: opacity 0.3s;
+    transition: opacity 0.4s, transform 0.4s;
+    position: relative;
   }
-  .chat-teaser.hidden { opacity: 0; pointer-events: none; }
+  .chat-teaser::before {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    right: 18px;
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    transform: rotate(45deg);
+  }
+  .chat-teaser.hidden { opacity: 0; transform: translateY(10px); pointer-events: none; }
   @keyframes teaserBob {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
+    50% { transform: translateY(-5px); }
   }
 
+  /* Chat window — significantly improved */
   .chat-window {
     position: fixed;
-    bottom: 6.5rem;
+    bottom: 7rem;
     right: 1.5rem;
-    width: 380px;
+    width: 400px;
     max-width: calc(100vw - 3rem);
-    height: 560px;
-    max-height: calc(100vh - 9rem);
+    height: 600px;
+    max-height: calc(100vh - 10rem);
     background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 30px 70px rgba(20,32,54,0.3);
-    border: 1px solid var(--line);
+    border-radius: 20px;
+    box-shadow:
+      0 30px 80px rgba(20,32,54,0.35),
+      0 0 0 1px var(--line);
     z-index: 1002;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     opacity: 0;
-    transform: translateY(20px) scale(0.95);
+    transform: translateY(20px) scale(0.92);
     pointer-events: none;
     transition: all 0.4s cubic-bezier(.4,0,.2,1);
     transform-origin: bottom right;
@@ -1694,30 +1741,52 @@
   }
   @media (max-width: 1000px) {
     .chat-window {
-      bottom: 6.5rem;
-      right: 1.5rem;
-      left: 1.5rem;
+      bottom: 8rem;
+      right: 1rem;
+      left: 1rem;
       width: auto;
       max-width: none;
     }
+    .chatbot-launcher { bottom: 1.5rem; right: 1.5rem; }
   }
 
+  /* Chat header — premium gradient + decorative pattern */
   .chat-header {
-    background: var(--navy);
+    background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 50%, var(--navy-soft) 100%);
     color: var(--beige-bright);
-    padding: 1.25rem 1.25rem 1rem;
-    border-bottom: 3px solid var(--beige-deep);
+    padding: 1.5rem 1.25rem 1.25rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .chat-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 80% 20%, rgba(232,217,184,0.15) 0%, transparent 40%),
+      radial-gradient(circle at 20% 80%, rgba(232,217,184,0.08) 0%, transparent 40%);
+    pointer-events: none;
+  }
+  .chat-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--beige-deep), var(--beige-bright), var(--beige-deep));
   }
   .chat-header-top {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 0.5rem;
+    gap: 0.85rem;
+    margin-bottom: 0.6rem;
+    position: relative;
+    z-index: 1;
   }
   .chat-avatar {
-    width: 40px; height: 40px;
+    width: 46px; height: 46px;
     border-radius: 50%;
-    background: var(--beige);
+    background: linear-gradient(135deg, var(--beige-bright), var(--beige-deep));
     color: var(--navy);
     display: flex;
     align-items: center;
@@ -1725,80 +1794,124 @@
     font-family: 'Playfair Display', serif;
     font-weight: 700;
     font-style: italic;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     position: relative;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.4);
+    flex-shrink: 0;
   }
   .chat-avatar::after {
     content: '';
     position: absolute;
-    bottom: 0; right: 0;
-    width: 12px; height: 12px;
+    bottom: 1px; right: 1px;
+    width: 13px; height: 13px;
     border-radius: 50%;
-    background: #4ade80;
-    border: 2px solid var(--navy);
+    background: #22c55e;
+    border: 2.5px solid var(--navy-deep);
+    box-shadow: 0 0 0 0 rgba(34,197,94,0.7);
+    animation: onlineDot 2s infinite;
   }
+  @keyframes onlineDot {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.5); }
+    50% { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+  }
+  .chat-header-info { flex: 1; min-width: 0; }
   .chat-header h4 {
     font-family: 'Oswald', sans-serif;
     font-weight: 700;
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    line-height: 1;
+    line-height: 1.1;
+    color: var(--beige-bright);
   }
   .chat-header-sub {
     font-size: 0.72rem;
     color: var(--beige);
-    margin-top: 0.25rem;
-    letter-spacing: 0.08em;
+    margin-top: 0.3rem;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    text-transform: uppercase;
+  }
+  .chat-header-sub::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: #22c55e;
+    border-radius: 50%;
+    box-shadow: 0 0 6px #22c55e;
   }
   .chat-tagline {
-    font-size: 0.78rem;
+    font-size: 0.82rem;
     color: var(--concrete-light);
-    line-height: 1.4;
-    margin-top: 0.5rem;
+    line-height: 1.5;
+    margin-top: 0.6rem;
+    position: relative;
+    z-index: 1;
   }
 
+  /* Chat messages — refined */
   .chat-messages {
     flex: 1;
     overflow-y: auto;
-    padding: 1.25rem;
+    padding: 1.5rem 1.25rem;
     display: flex;
     flex-direction: column;
     gap: 0.85rem;
-    background: var(--cream);
+    background:
+      linear-gradient(180deg, var(--cream) 0%, #efe6d3 100%);
+    background-attachment: local;
   }
+  .chat-messages::-webkit-scrollbar { width: 6px; }
+  .chat-messages::-webkit-scrollbar-thumb {
+    background: var(--beige-deep);
+    border-radius: 3px;
+  }
+  .chat-messages::-webkit-scrollbar-track { background: transparent; }
+
   .chat-msg {
     max-width: 85%;
-    padding: 0.8rem 1rem;
-    border-radius: 14px;
-    font-size: 0.9rem;
+    padding: 0.85rem 1.1rem;
+    border-radius: 16px;
+    font-size: 0.92rem;
     line-height: 1.5;
     animation: msgFade 0.4s cubic-bezier(.4,0,.2,1);
+    box-shadow: 0 2px 8px rgba(20,32,54,0.06);
   }
   @keyframes msgFade {
-    from { opacity: 0; transform: translateY(8px); }
+    from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
   }
   .chat-msg.bot {
     background: #fff;
     color: var(--navy);
     border: 1px solid var(--line);
-    border-radius: 14px 14px 14px 4px;
+    border-radius: 16px 16px 16px 4px;
     align-self: flex-start;
   }
   .chat-msg.user {
-    background: var(--navy);
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
     color: var(--beige-bright);
-    border-radius: 14px 14px 4px 14px;
+    border-radius: 16px 16px 4px 16px;
     align-self: flex-end;
+    box-shadow: 0 4px 12px rgba(20,32,54,0.2);
+  }
+  .chat-msg a {
+    color: var(--navy);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: var(--beige-deep);
+    text-underline-offset: 3px;
   }
   .chat-typing {
     display: flex;
-    gap: 4px;
-    padding: 0.5rem 0;
+    gap: 5px;
+    padding: 0.45rem 0.2rem;
+    align-items: center;
   }
   .chat-typing span {
-    width: 7px; height: 7px;
+    width: 8px; height: 8px;
     background: var(--steel);
     border-radius: 50%;
     animation: typingBounce 1.4s ease-in-out infinite;
@@ -1807,60 +1920,77 @@
   .chat-typing span:nth-child(3) { animation-delay: 0.4s; }
   @keyframes typingBounce {
     0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
-    30% { transform: translateY(-6px); opacity: 1; }
+    30% { transform: translateY(-7px); opacity: 1; }
   }
 
+  /* Quick replies — pill style */
   .chat-quickreplies {
-    padding: 0.5rem 1.25rem 0.75rem;
+    padding: 0.6rem 1.25rem 0.8rem;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4rem;
-    background: var(--cream);
+    gap: 0.45rem;
+    background: #efe6d3;
     border-top: 1px solid var(--line-soft);
   }
   .quick-reply {
     background: #fff;
-    border: 1px solid var(--navy);
+    border: 1.5px solid var(--navy);
     color: var(--navy);
-    padding: 0.45rem 0.85rem;
-    border-radius: 18px;
-    font-size: 0.78rem;
+    padding: 0.5rem 1rem;
+    border-radius: 100px;
+    font-size: 0.8rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.3s cubic-bezier(.4,0,.2,1);
     font-family: 'Inter', sans-serif;
+    box-shadow: 0 2px 6px rgba(20,32,54,0.08);
   }
   .quick-reply:hover {
     background: var(--navy);
     color: var(--beige-bright);
     transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(20,32,54,0.25);
+  }
+  .quick-reply.primary {
+    background: var(--navy);
+    color: var(--beige-bright);
+  }
+  .quick-reply.primary:hover {
+    background: var(--navy-deep);
   }
 
+  /* Chat input — premium */
   .chat-input {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.85rem 1rem;
+    gap: 0.6rem;
+    padding: 0.95rem 1rem;
     background: #fff;
     border-top: 1px solid var(--line);
   }
   .chat-input input {
     flex: 1;
-    border: 1px solid var(--line);
+    border: 1.5px solid var(--line);
     background: var(--cream);
-    border-radius: 22px;
-    padding: 0.7rem 1rem;
+    border-radius: 100px;
+    padding: 0.75rem 1.15rem;
     font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.92rem;
     color: var(--navy);
     outline: none;
-    transition: border-color 0.3s;
+    transition: all 0.3s;
   }
-  .chat-input input:focus { border-color: var(--navy); }
+  .chat-input input:focus {
+    border-color: var(--navy);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(28,46,74,0.1);
+  }
+  .chat-input input::placeholder { color: var(--concrete); }
+
   .chat-send {
-    width: 42px; height: 42px;
+    width: 44px; height: 44px;
     border: none;
-    background: var(--navy);
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
     color: var(--beige-bright);
     border-radius: 50%;
     cursor: pointer;
@@ -1869,30 +1999,85 @@
     justify-content: center;
     transition: all 0.3s;
     flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(20,32,54,0.25);
   }
   .chat-send:hover {
-    background: var(--blue);
-    transform: scale(1.05);
+    transform: scale(1.08) rotate(-8deg);
+    box-shadow: 0 6px 16px rgba(20,32,54,0.35);
   }
 
+  /* Bottom call bar in chat — much more attractive */
   .chat-call-bar {
-    padding: 0.6rem 1rem;
-    background: var(--navy-deep);
+    padding: 0.95rem 1.1rem;
+    background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 50%, var(--navy-soft) 100%);
     color: var(--beige-bright);
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     gap: 0.5rem;
     font-family: 'Oswald', sans-serif;
-    font-weight: 700;
-    font-size: 0.78rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
     text-decoration: none;
-    transition: background 0.3s;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid var(--beige-deep);
   }
-  .chat-call-bar:hover { background: var(--blue); }
-  .chat-call-bar svg { color: var(--beige); }
+  .chat-call-bar::before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    left: -100%;
+    width: 100%;
+    background: linear-gradient(90deg, transparent, rgba(232,217,184,0.15), transparent);
+    transition: left 0.6s;
+  }
+  .chat-call-bar:hover::before { left: 100%; }
+  .chat-call-bar:hover {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+  }
+  .chat-call-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+  .chat-call-bar-icon {
+    width: 36px; height: 36px;
+    background: var(--beige);
+    color: var(--navy);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: phoneRing 2s ease-in-out infinite;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    flex-shrink: 0;
+  }
+  .chat-call-bar-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+  .chat-call-bar-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--beige);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 0.15rem;
+  }
+  .chat-call-bar-number {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--beige-bright);
+    letter-spacing: 0.02em;
+  }
+  .chat-call-bar-arrow {
+    color: var(--beige);
+    transition: transform 0.3s;
+  }
+  .chat-call-bar:hover .chat-call-bar-arrow {
+    transform: translateX(4px);
+  }
 
   /* Mobile padding adjustments */
   @media (max-width: 768px) {
@@ -1903,13 +2088,14 @@
     footer { padding: 3rem 1.5rem 2rem; }
     .section-header { margin-bottom: 3rem; }
     .process-header, .faq-header { margin-bottom: 3rem; }
-    .map-pin-label { font-size: 0.55rem; padding: 0.18rem 0.4rem; }
-    .map-badge { padding: 0.5rem 0.65rem; }
-    .map-badge-region { font-size: 0.78rem; }
-    .map-badge-sub { font-size: 0.55rem; }
-    .map-compass { width: 38px; height: 38px; }
-    .map-scale { font-size: 0.55rem; padding: 0.35rem 0.5rem; }
-    .map-scale::before { width: 24px; }
+    .map-badge { padding: 0.55rem 0.7rem; }
+    .map-badge-region { font-size: 0.85rem; }
+    .map-badge-sub { font-size: 0.55rem; letter-spacing: 0.08em; }
+    .map-cta { padding: 0.45rem 0.75rem 0.45rem 0.45rem; gap: 0.5rem; }
+    .map-cta-icon { width: 26px; height: 26px; }
+    .map-cta-label { font-size: 0.55rem; }
+    .map-cta-number { font-size: 0.82rem; }
+    .map-open-link { font-size: 0.6rem; padding: 0.4rem 0.6rem; letter-spacing: 0.08em; }
   }
 </style>
 </head>
@@ -1938,11 +2124,6 @@
     <span></span><span></span><span></span>
   </button>
 </nav>
-
-<!-- Mobile floating call button -->
-<a href="tel:7086554925" class="mobile-call" aria-label="Call Colonial">
-  <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.21c.28-.26.36-.65.25-1C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>
-</a>
 
 <!-- ====== HERO ====== -->
 <section class="hero">
@@ -2210,7 +2391,6 @@
     <!-- Concrete Pouring -->
     <div class="service-card reveal">
       <div class="service-visual">
-        <span class="visual-corner">01 / Concrete</span>
         <div class="visual-arrow">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
         </div>
@@ -2231,7 +2411,6 @@
     <!-- Demolition -->
     <div class="service-card reveal">
       <div class="service-visual">
-        <span class="visual-corner">02 / Demolition</span>
         <div class="visual-arrow">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
         </div>
@@ -2252,7 +2431,6 @@
     <!-- Foundations -->
     <div class="service-card reveal">
       <div class="service-visual">
-        <span class="visual-corner">03 / Foundations</span>
         <div class="visual-arrow">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
         </div>
@@ -2272,8 +2450,7 @@
 
     <!-- Sidewalks & Walkways -->
     <div class="service-card reveal">
-      <div class="service-visual">
-        <span class="visual-corner">04 / Sidewalks</span>
+      <div class="service-visual portrait">
         <div class="visual-arrow">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
         </div>
@@ -2306,58 +2483,28 @@
     </div>
 
     <div class="gallery-grid">
-      <div class="gallery-item g-big-wide reveal">
-        <span class="gallery-badge">★ Featured</span>
+      <div class="gallery-item reveal">
         <img src="images/driveway.png" alt="Newly poured concrete driveway with clean control joints" />
-        <div class="gallery-overlay">
-          <div class="gallery-tag">Residential · Driveway</div>
-          <div class="gallery-title">Full Driveway Pour</div>
-        </div>
       </div>
 
-      <div class="gallery-item g-tall reveal">
-        <span class="gallery-badge">Demolition</span>
+      <div class="gallery-item reveal">
         <img src="images/demolition.png" alt="Excavator tearing down a brick building" />
-        <div class="gallery-overlay">
-          <div class="gallery-tag">Commercial · Structure Demo</div>
-          <div class="gallery-title">Brick Building Tear-Down</div>
-        </div>
       </div>
 
-      <div class="gallery-item g-half reveal">
-        <span class="gallery-badge">Foundations</span>
+      <div class="gallery-item reveal">
         <img src="images/foundation.png" alt="New foundation walls poured for residential build" />
-        <div class="gallery-overlay">
-          <div class="gallery-tag">New Build · Foundation</div>
-          <div class="gallery-title">Residential Foundation</div>
-        </div>
       </div>
 
-      <div class="gallery-item g-half reveal">
-        <span class="gallery-badge">Stamped Concrete</span>
+      <div class="gallery-item reveal">
         <img src="images/stamped.png" alt="Decorative stamped concrete driveway" />
-        <div class="gallery-overlay">
-          <div class="gallery-tag">Decorative · Driveway</div>
-          <div class="gallery-title">Stamped Concrete Drive</div>
-        </div>
       </div>
 
-      <div class="gallery-item g-half reveal">
-        <span class="gallery-badge">Commercial</span>
+      <div class="gallery-item reveal">
         <img src="images/commercial.png" alt="Polished concrete floor in commercial warehouse" />
-        <div class="gallery-overlay">
-          <div class="gallery-tag">Commercial · Slab</div>
-          <div class="gallery-title">Polished Warehouse Floor</div>
-        </div>
       </div>
 
-      <div class="gallery-item g-half reveal">
-        <span class="gallery-badge">Sidewalk</span>
+      <div class="gallery-item portrait reveal">
         <img src="images/sidewalk.png" alt="Fresh concrete sidewalk pour at construction site" />
-        <div class="gallery-overlay">
-          <div class="gallery-tag">New Build · Walkway</div>
-          <div class="gallery-title">Sidewalk & Approach</div>
-        </div>
       </div>
     </div>
   </div>
@@ -2510,191 +2657,39 @@
     </div>
 
     <div class="map-visual reveal">
+      <!-- Real Google Maps embed centered on Chicagoland -->
+      <iframe
+        class="map-iframe"
+        src="https://maps.google.com/maps?q=Chicago,+IL&t=&z=10&ie=UTF8&iwloc=&output=embed"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen=""
+        aria-label="Service area map showing Chicago and surrounding suburbs"
+      ></iframe>
+
+      <!-- Top-left badge -->
       <div class="map-badge">
         <div class="map-badge-label">Service Region</div>
         <div class="map-badge-region">Chicagoland</div>
         <div class="map-badge-sub">Chicago · North Shore · DuPage</div>
       </div>
 
-      <div class="map-compass">
-        <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="25" cy="25" r="22" fill="none" stroke="#d9c9a8" stroke-width="0.5" opacity="0.4"/>
-          <polygon points="25,8 28,25 25,22 22,25" fill="#e8d9b8"/>
-          <polygon points="25,42 28,25 25,28 22,25" fill="#e8d9b8" opacity="0.4"/>
-          <text x="25" y="6" text-anchor="middle" font-family="Oswald" font-weight="700" font-size="6" fill="#e8d9b8">N</text>
-        </svg>
-      </div>
+      <!-- Top-right call CTA on the map -->
+      <a href="tel:7086554925" class="map-cta">
+        <div class="map-cta-icon">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.21c.28-.26.36-.65.25-1C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>
+        </div>
+        <div class="map-cta-text">
+          <span class="map-cta-label">In your area?</span>
+          <span class="map-cta-number">708-655-4925</span>
+        </div>
+      </a>
 
-      <div class="map-scale">~ 25 MI</div>
-
-      <!-- Real-ish Chicagoland map -->
-      <svg viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-        <defs>
-          <pattern id="mapGrid" x="0" y="0" width="22" height="22" patternUnits="userSpaceOnUse">
-            <circle cx="11" cy="11" r="0.6" fill="#d9c9a8" opacity="0.2"/>
-          </pattern>
-          <linearGradient id="lakeGrad" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="#243a5c"/>
-            <stop offset="100%" stop-color="#142036"/>
-          </linearGradient>
-          <radialGradient id="cityGlow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#e8d9b8" stop-opacity="0.18"/>
-            <stop offset="100%" stop-color="#e8d9b8" stop-opacity="0"/>
-          </radialGradient>
-          <radialGradient id="hqGlow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#e8d9b8" stop-opacity="0.5"/>
-            <stop offset="100%" stop-color="#e8d9b8" stop-opacity="0"/>
-          </radialGradient>
-        </defs>
-
-        <!-- Background grid -->
-        <rect width="600" height="450" fill="url(#mapGrid)"/>
-
-        <!-- Lake Michigan (on the right side, east of Chicago) -->
-        <path d="M430,0 L600,0 L600,450 L450,450 L460,400 L455,340 L470,280 L460,220 L475,160 L465,100 L430,40 Z" fill="url(#lakeGrad)"/>
-        <!-- Lake wave details -->
-        <g stroke="#3a5a8c" stroke-width="0.6" fill="none" opacity="0.3">
-          <path d="M490,80 Q510,75 530,80 T570,82"/>
-          <path d="M480,150 Q500,145 520,150 T560,152"/>
-          <path d="M495,220 Q515,215 535,220 T575,222"/>
-          <path d="M485,290 Q505,285 525,290 T565,292"/>
-          <path d="M495,360 Q515,355 535,360 T575,362"/>
-        </g>
-        <!-- LAKE MICHIGAN label -->
-        <text x="525" y="225" text-anchor="middle" font-family="Oswald" font-weight="700" font-size="11" fill="#e8d9b8" letter-spacing="3" opacity="0.7">LAKE</text>
-        <text x="525" y="240" text-anchor="middle" font-family="Oswald" font-weight="700" font-size="11" fill="#e8d9b8" letter-spacing="3" opacity="0.7">MICHIGAN</text>
-
-        <!-- Chicago River (Y-shape through the city) -->
-        <g stroke="#3a5a8c" stroke-width="2.5" fill="none" opacity="0.5" stroke-linecap="round">
-          <path d="M455,235 L380,235"/>
-          <path d="M380,235 L340,200"/>
-          <path d="M380,235 L340,275"/>
-        </g>
-
-        <!-- Major highways -->
-        <g>
-          <!-- I-90/94 Kennedy heading NW from city -->
-          <path d="M430,230 L380,200 L320,160 L240,110 L160,70" stroke="#e8d9b8" stroke-width="2.5" fill="none" opacity="0.75" stroke-linecap="round"/>
-          <path d="M430,230 L380,200 L320,160 L240,110 L160,70" stroke="#142036" stroke-width="0.8" fill="none" stroke-dasharray="5 6"/>
-          <g transform="translate(200, 95)">
-            <rect x="-14" y="-10" width="28" height="20" rx="3" fill="#e8d9b8"/>
-            <text x="0" y="4" text-anchor="middle" font-family="Oswald" font-weight="700" font-size="9" fill="#1c2e4a">I-90</text>
-          </g>
-
-          <!-- I-290 Eisenhower heading west to DuPage -->
-          <path d="M430,250 L360,260 L280,265 L180,265 L100,255" stroke="#e8d9b8" stroke-width="2.5" fill="none" opacity="0.75" stroke-linecap="round"/>
-          <path d="M430,250 L360,260 L280,265 L180,265 L100,255" stroke="#142036" stroke-width="0.8" fill="none" stroke-dasharray="5 6"/>
-          <g transform="translate(150, 280)">
-            <rect x="-14" y="-10" width="28" height="20" rx="3" fill="#e8d9b8"/>
-            <text x="0" y="4" text-anchor="middle" font-family="Oswald" font-weight="700" font-size="9" fill="#1c2e4a">I-290</text>
-          </g>
-
-          <!-- I-294 Tollway running north-south -->
-          <path d="M260,40 L255,150 L250,270 L255,380 L260,430" stroke="#e8d9b8" stroke-width="1.8" fill="none" opacity="0.55" stroke-linecap="round" stroke-dasharray="6 4"/>
-          <g transform="translate(238, 350)">
-            <rect x="-13" y="-9" width="26" height="18" rx="9" fill="none" stroke="#e8d9b8" stroke-width="1" opacity="0.6"/>
-            <text x="0" y="4" text-anchor="middle" font-family="Oswald" font-weight="700" font-size="8" fill="#e8d9b8" opacity="0.85">294</text>
-          </g>
-
-          <!-- Lake Shore Drive along the lake -->
-          <path d="M450,80 L445,140 L440,200 L435,260 L440,320 L450,380" stroke="#e8d9b8" stroke-width="1.5" fill="none" opacity="0.5" stroke-linecap="round" stroke-dasharray="4 4"/>
-        </g>
-
-        <!-- Service area glow (centered over Chicago) -->
-        <circle cx="380" cy="240" r="240" fill="url(#cityGlow)"/>
-
-        <!-- Service boundary -->
-        <ellipse cx="320" cy="220" rx="210" ry="170" fill="none" stroke="#e8d9b8" stroke-width="1" stroke-dasharray="3 6" opacity="0.4"/>
-
-        <!-- Chicago city outline (rough shape, hugging the lake) -->
-        <path d="M390,170 L420,170 L430,180 L430,310 L425,330 L390,335 L390,290 L385,270 L390,240 L385,210 Z"
-              fill="rgba(232,217,184,0.08)" stroke="#e8d9b8" stroke-width="1" opacity="0.6"/>
-
-        <!-- HQ glow under Chicago -->
-        <circle cx="410" cy="240" r="60" fill="url(#hqGlow)"/>
-
-        <!-- DuPage County indicator (west side) -->
-        <g opacity="0.4">
-          <rect x="100" y="180" width="120" height="120" fill="none" stroke="#d9c9a8" stroke-width="0.8" stroke-dasharray="2 4"/>
-          <text x="160" y="170" text-anchor="middle" font-family="Oswald" font-weight="700" font-size="9" fill="#d9c9a8" letter-spacing="3">DUPAGE COUNTY</text>
-        </g>
-
-        <!-- Cardinal labels -->
-        <g fill="#e8d9b8" opacity="0.3" font-family="Oswald" font-weight="700" font-size="8" letter-spacing="2">
-          <text x="300" y="14" text-anchor="middle">N · WI BORDER ↑</text>
-          <text x="300" y="445" text-anchor="middle">↓ S · DOWNERS / SOUTHLAND</text>
-        </g>
-
-        <!-- Bottom label -->
-        <text x="300" y="438" text-anchor="middle" font-family="Oswald" font-weight="600" font-size="7" fill="#d9c9a8" opacity="0.4" letter-spacing="3">CHICAGOLAND · ILLINOIS</text>
-      </svg>
-
-      <!-- City Pins -->
-      <!-- Chicago (HQ) -->
-      <div class="map-pin hq" style="top: 53%; left: 68%;">
-        <div class="map-pin-dot"></div>
-        <div class="map-pin-label">Chicago · HQ</div>
-      </div>
-
-      <!-- Lincoln Park (just north of downtown, on the lake) -->
-      <div class="map-pin flag-right" style="top: 44%; left: 67%;">
-        <div class="map-pin-dot" style="animation-delay: 0.2s;"></div>
-        <div class="map-pin-label">Lincoln Park</div>
-      </div>
-
-      <!-- Lakeview (north of Lincoln Park) -->
-      <div class="map-pin flag-right" style="top: 38%; left: 66%;">
-        <div class="map-pin-dot" style="animation-delay: 0.4s;"></div>
-        <div class="map-pin-label">Lakeview</div>
-      </div>
-
-      <!-- Evanston (north along the lake) -->
-      <div class="map-pin flag-right" style="top: 24%; left: 67%;">
-        <div class="map-pin-dot" style="animation-delay: 0.6s;"></div>
-        <div class="map-pin-label">Evanston</div>
-      </div>
-
-      <!-- Wilmette (north of Evanston) -->
-      <div class="map-pin flag-right" style="top: 17%; left: 67%;">
-        <div class="map-pin-dot" style="animation-delay: 0.8s;"></div>
-        <div class="map-pin-label">Wilmette</div>
-      </div>
-
-      <!-- Skokie (inland NW of Evanston) -->
-      <div class="map-pin" style="top: 26%; left: 56%;">
-        <div class="map-pin-dot" style="animation-delay: 1s;"></div>
-        <div class="map-pin-label">Skokie</div>
-      </div>
-
-      <!-- Oak Park (just west of Chicago) -->
-      <div class="map-pin" style="top: 55%; left: 55%;">
-        <div class="map-pin-dot" style="animation-delay: 1.2s;"></div>
-        <div class="map-pin-label">Oak Park</div>
-      </div>
-
-      <!-- Elmhurst (DuPage, west) -->
-      <div class="map-pin" style="top: 52%; left: 42%;">
-        <div class="map-pin-dot" style="animation-delay: 1.4s;"></div>
-        <div class="map-pin-label">Elmhurst</div>
-      </div>
-
-      <!-- Wheaton (DuPage, west further) -->
-      <div class="map-pin" style="top: 56%; left: 30%;">
-        <div class="map-pin-dot" style="animation-delay: 1.6s;"></div>
-        <div class="map-pin-label">Wheaton</div>
-      </div>
-
-      <!-- Naperville (DuPage, SW) -->
-      <div class="map-pin" style="top: 66%; left: 24%;">
-        <div class="map-pin-dot" style="animation-delay: 1.8s;"></div>
-        <div class="map-pin-label">Naperville</div>
-      </div>
-
-      <!-- Downers Grove (south DuPage) -->
-      <div class="map-pin" style="top: 70%; left: 36%;">
-        <div class="map-pin-dot" style="animation-delay: 2s;"></div>
-        <div class="map-pin-label">Downers Grove</div>
-      </div>
+      <!-- Bottom-right "open in google maps" hint -->
+      <a href="https://www.google.com/maps/search/?api=1&query=Chicago,+IL" target="_blank" rel="noopener" class="map-open-link">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M14 10l7-7M9 21H5a2 2 0 0 1-2-2v-4M9 3H5a2 2 0 0 0-2 2v4"/></svg>
+        Open in Google Maps
+      </a>
     </div>
   </div>
 </section>
@@ -2828,26 +2823,36 @@
   </div>
 </footer>
 
-<!-- ====== AI CHATBOT ====== -->
+<!-- ====== AI CHATBOT + CALL CTA STACK ====== -->
 <div class="chatbot-launcher">
-  <div class="chat-teaser" id="chatTeaser">👋 Got a concrete or demo question? Ask me anything!</div>
-  <button class="chat-toggle" id="chatToggle" aria-label="Open chat">
-    <svg class="icon-chat" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-    <svg class="icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
-    <span class="chat-notif" id="chatNotif">1</span>
-  </button>
+  <div class="chat-teaser" id="chatTeaser">👋 Got a concrete or demo question? Tap to chat!</div>
+  <div class="chat-stack">
+    <button class="chat-toggle" id="chatToggle" aria-label="Open chat">
+      <svg class="icon-chat" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+      </svg>
+      <svg class="icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      <span class="chat-notif" id="chatNotif">1</span>
+    </button>
+    <a href="tel:7086554925" class="chat-call-btn" aria-label="Call Colonial Concrete">
+      <div class="phone-icon-wrap">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.21c.28-.26.36-.65.25-1C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>
+      </div>
+      <span>Call Us</span>
+    </a>
+  </div>
 </div>
 
 <div class="chat-window" id="chatWindow" role="dialog" aria-label="Colonial chat assistant">
   <div class="chat-header">
     <div class="chat-header-top">
       <div class="chat-avatar">C</div>
-      <div>
-        <h4>Hey there 👋</h4>
-        <div class="chat-header-sub">Colonial · Online Now</div>
+      <div class="chat-header-info">
+        <h4>Colonial Assistant</h4>
+        <div class="chat-header-sub">Online · Replies instantly</div>
       </div>
     </div>
-    <div class="chat-tagline">Ask anything about concrete, demo, pricing, or scheduling — I'll get you answers fast.</div>
+    <div class="chat-tagline">Ask anything about concrete, demolition, pricing, or scheduling — I've got fast answers.</div>
   </div>
   <div class="chat-messages" id="chatMessages"></div>
   <div class="chat-quickreplies" id="chatQuickReplies"></div>
@@ -2858,8 +2863,16 @@
     </button>
   </div>
   <a href="tel:7086554925" class="chat-call-bar">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.21c.28-.26.36-.65.25-1C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>
-    Or Call Now · 708-655-4925
+    <div class="chat-call-bar-left">
+      <div class="chat-call-bar-icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.21c.28-.26.36-.65.25-1C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>
+      </div>
+      <div class="chat-call-bar-text">
+        <span class="chat-call-bar-label">Tap to Call</span>
+        <span class="chat-call-bar-number">708-655-4925</span>
+      </div>
+    </div>
+    <svg class="chat-call-bar-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
   </a>
 </div>
 

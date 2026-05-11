@@ -2204,6 +2204,31 @@
     50% { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
   }
   .chat-header-info { flex: 1; min-width: 0; }
+  .chat-close {
+    background: rgba(232, 217, 184, 0.12);
+    border: 1px solid rgba(232, 217, 184, 0.25);
+    color: var(--beige-bright);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(.4,0,.2,1);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+  }
+  .chat-close:hover {
+    background: var(--beige);
+    color: var(--navy);
+    border-color: var(--beige);
+    transform: rotate(90deg) scale(1.05);
+  }
+  .chat-close:active {
+    transform: rotate(90deg) scale(0.95);
+  }
   .chat-header h4 {
     font-family: 'Oswald', sans-serif;
     font-weight: 700;
@@ -3262,6 +3287,9 @@
         <h4>Colonial Assistant</h4>
         <div class="chat-header-sub">Online · Replies instantly</div>
       </div>
+      <button class="chat-close" id="chatClose" aria-label="Close chat">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
     </div>
     <div class="chat-tagline">Ask anything about concrete, demolition, pricing, or scheduling — I've got fast answers.</div>
   </div>
@@ -3375,6 +3403,21 @@
         'Patio / sidewalk',
         'Talk to a human'
       ]), 1900);
+    }
+  });
+
+  // Close button in chat header
+  const chatClose = document.getElementById('chatClose');
+  chatClose.addEventListener('click', () => {
+    chatWindow.classList.remove('open');
+    chatToggle.classList.remove('open');
+  });
+
+  // ESC key also closes the chat
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && chatWindow.classList.contains('open')) {
+      chatWindow.classList.remove('open');
+      chatToggle.classList.remove('open');
     }
   });
 

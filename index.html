@@ -963,13 +963,22 @@
     .services-grid { grid-template-columns: 1fr; }
     .services-grid .service-card.span-full {
       grid-column: span 1;
-      grid-template-columns: 1fr;
+      display: flex;
+      flex-direction: column;
     }
     .services-grid .service-card.span-full .service-visual {
       aspect-ratio: 4/3;
+      width: 100%;
       border-right: 0;
       border-bottom: 3px solid var(--beige-deep);
       min-height: 0;
+    }
+    .services-grid .service-card.span-full:hover .service-visual {
+      border-right-color: var(--beige-deep);
+      border-bottom-color: var(--navy);
+    }
+    .services-grid .service-card.span-full .service-body {
+      display: block;
     }
   }
 

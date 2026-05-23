@@ -75,19 +75,23 @@
   "logo": "https://colonialconcretedemo.com/images/logo.png",
   "address": {
     "@type": "PostalAddress",
+    "streetAddress": "3227 N Western Ave",
     "addressLocality": "Chicago",
     "addressRegion": "IL",
+    "postalCode": "60618",
     "addressCountry": "US"
   },
   "geo": {
     "@type": "GeoCoordinates",
-    "latitude": 41.8781,
-    "longitude": -87.6298
+    "latitude": 41.9407,
+    "longitude": -87.6878
   },
   "areaServed": [
     { "@type": "City", "name": "Chicago" },
-    { "@type": "City", "name": "Lincoln Park" },
-    { "@type": "City", "name": "Lakeview" },
+    { "@type": "Place", "name": "Avondale" },
+    { "@type": "Place", "name": "Logan Square" },
+    { "@type": "Place", "name": "Lincoln Park" },
+    { "@type": "Place", "name": "Lakeview" },
     { "@type": "City", "name": "Evanston" },
     { "@type": "City", "name": "Wilmette" },
     { "@type": "City", "name": "Skokie" },
@@ -642,7 +646,7 @@
     50% { opacity: 0.5; transform: scale(1.4); }
   }
 
-  h1 {
+  h1, .hero-headline {
     font-family: 'Oswald', sans-serif;
     font-weight: 700;
     font-size: clamp(2.8rem, 8vw, 7.5rem);
@@ -652,22 +656,35 @@
     margin-bottom: 1.75rem;
     color: var(--navy);
   }
-  h1 .line { display: block; overflow: hidden; padding-bottom: 0.08em; }
-  h1 .line > span {
+  h1 .line, .hero-headline .line { display: block; overflow: hidden; padding-bottom: 0.08em; }
+  h1 .line > span, .hero-headline .line > span {
     display: inline-block;
     transform: translateY(110%);
     animation: lineReveal 1.1s cubic-bezier(.2,.8,.2,1) forwards;
   }
-  h1 .line:nth-child(1) > span { animation-delay: 0.3s; }
-  h1 .line:nth-child(2) > span { animation-delay: 0.5s; }
-  h1 .line:nth-child(3) > span { animation-delay: 0.7s; }
-  h1 .script {
+  h1 .line:nth-child(1) > span, .hero-headline .line:nth-child(1) > span { animation-delay: 0.3s; }
+  h1 .line:nth-child(2) > span, .hero-headline .line:nth-child(2) > span { animation-delay: 0.5s; }
+  h1 .line:nth-child(3) > span, .hero-headline .line:nth-child(3) > span { animation-delay: 0.7s; }
+  h1 .script, .hero-headline .script {
     font-family: 'Playfair Display', serif;
     font-style: italic;
     font-weight: 500;
     text-transform: none;
     color: var(--beige-deep);
     letter-spacing: -0.01em;
+  }
+
+  /* Screen-reader-only utility — visible to Google & accessibility tools, invisible on screen */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
   @keyframes lineReveal { to { transform: translateY(0); } }
   @keyframes fadeUp {
@@ -2566,11 +2583,12 @@
   <div class="hero-content">
     <div>
       <div class="hero-eyebrow">Chicagoland · Licensed & Insured</div>
-      <h1>
+      <h1 class="sr-only">Concrete & Demolition Contractor in Chicago — Avondale, North Shore & DuPage County</h1>
+      <div class="hero-headline" aria-hidden="true">
         <span class="line"><span>Concrete Poured.</span></span>
         <span class="line"><span>Walls <em class="script">Removed.</em></span></span>
         <span class="line"><span>Done <em class="script">Right.</em></span></span>
-      </h1>
+      </div>
       <p class="hero-sub">
         Driveways, patios, foundations, sidewalks, and full demolition. Serving Chicago, the North Shore, and DuPage County with old-school craftsmanship.
       </p>
@@ -2812,7 +2830,8 @@
   <div class="section-header reveal">
     <div>
       <div class="section-label">What We Do</div>
-      <h2>Built To <em class="script">Last.</em><br>Torn Down Clean.</h2>
+      <h2 class="sr-only">Concrete and Demolition Services in Chicago — Driveways, Patios, Foundations, Sidewalks, Stamped Concrete, and Full Demolition</h2>
+      <h2 aria-hidden="true">Built To <em class="script">Last.</em><br>Torn Down Clean.</h2>
     </div>
     <p class="section-intro">From a backyard patio to a full structure tear-down, Colonial handles concrete and demolition with the kind of care that makes neighbors ask who did the work.</p>
   </div>
@@ -2926,7 +2945,8 @@
     <div class="section-header reveal">
       <div>
         <div class="section-label">Recent Work</div>
-        <h2>The Proof Is In The <em class="script">Pour.</em></h2>
+        <h2 class="sr-only">Concrete and Demolition Projects in Chicago and Surrounding Suburbs</h2>
+        <h2 aria-hidden="true">The Proof Is In The <em class="script">Pour.</em></h2>
       </div>
       <p class="section-intro">Real jobs, real concrete, real demolition. Every project we touch is one we'd stand behind for the neighbors to see.</p>
     </div>
@@ -2964,7 +2984,8 @@
   <div class="process-wrap">
     <div class="process-header reveal">
       <div class="section-label">How We Work</div>
-      <h2>Straight Talk.<br><em class="script">Straight Lines.</em></h2>
+      <h2 class="sr-only">Our Concrete Contractor Process — How Colonial Concrete and Demolition Co. Handles Every Chicago Project</h2>
+      <h2 aria-hidden="true">Straight Talk.<br><em class="script">Straight Lines.</em></h2>
     </div>
 
     <div class="process-steps">
@@ -3019,7 +3040,8 @@
 
     <div class="reveal">
       <div class="section-label">Our Story</div>
-      <h2>Old-School Work,<br><em class="script">New School</em> Standards.</h2>
+      <h2 class="sr-only">About Colonial Concrete and Demolition Co. — Licensed and Insured Chicago Contractor Based in Avondale</h2>
+      <h2 aria-hidden="true">Old-School Work,<br><em class="script">New School</em> Standards.</h2>
       <p style="color: var(--steel); line-height: 1.7; margin-top: 1.5rem; font-size: 1.02rem;">
         Colonial Concrete & Demolition is built on the kind of work ethic Chicago's been pouring since the great fire — show up, do it right, stand behind it. We pour driveways your grandkids will park on. We tear down what needs to come down, and we leave the site cleaner than we found it.
       </p>
@@ -3082,14 +3104,17 @@
   <div class="area-grid">
     <div class="reveal">
       <div class="section-label">Where We Work</div>
-      <h2>Chicago, the <em class="script">North Shore,</em><br>& DuPage County.</h2>
+      <h2 class="sr-only">Concrete and Demolition Contractor Serving Chicago, Avondale, Lincoln Park, Evanston, Naperville, and All of DuPage County</h2>
+      <h2 aria-hidden="true">Chicago, the <em class="script">North Shore,</em><br>& DuPage County.</h2>
       <p style="color: var(--steel); line-height: 1.7; margin-top: 1.5rem; font-size: 1rem;">
-        Proudly serving Chicago and the surrounding suburbs — North Side neighborhoods, the North Shore, and west into DuPage County. If you're nearby, we've got you covered.
+        Based in Avondale and proudly serving Chicago and the surrounding suburbs — North Side neighborhoods, the North Shore, and west into DuPage County. If you're nearby, we've got you covered.
       </p>
 
       <div class="area-cities">
+        <div class="area-city">Avondale</div>
         <div class="area-city">Lincoln Park</div>
         <div class="area-city">Lakeview</div>
+        <div class="area-city">Logan Square</div>
         <div class="area-city">Evanston</div>
         <div class="area-city">Wilmette</div>
         <div class="area-city">Skokie</div>
@@ -3109,7 +3134,7 @@
       <!-- Real Google Maps embed centered on Chicagoland -->
       <iframe
         class="map-iframe"
-        src="https://maps.google.com/maps?q=Chicago,+IL&t=&z=10&ie=UTF8&iwloc=&output=embed"
+        src="https://maps.google.com/maps?q=3227+N+Western+Ave,+Chicago,+IL+60618&t=&z=12&ie=UTF8&iwloc=&output=embed"
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"
         allowfullscreen=""
@@ -3135,7 +3160,7 @@
       </a>
 
       <!-- Bottom-right "open in google maps" hint -->
-      <a href="https://www.google.com/maps/search/?api=1&query=Chicago,+IL" target="_blank" rel="noopener" class="map-open-link">
+      <a href="https://www.google.com/maps/search/?api=1&query=3227+N+Western+Ave,+Chicago,+IL+60618" target="_blank" rel="noopener" class="map-open-link">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M14 10l7-7M9 21H5a2 2 0 0 1-2-2v-4M9 3H5a2 2 0 0 0-2 2v4"/></svg>
         Open in Google Maps
       </a>
@@ -3148,7 +3173,8 @@
   <div class="faq-wrap">
     <div class="faq-header reveal">
       <div class="section-label">Common Questions</div>
-      <h2>Good Questions.<br><em class="script">Honest</em> Answers.</h2>
+      <h2 class="sr-only">Frequently Asked Questions About Concrete and Demolition Work in Chicago</h2>
+      <h2 aria-hidden="true">Good Questions.<br><em class="script">Honest</em> Answers.</h2>
     </div>
 
     <div class="faq-item reveal">
@@ -3231,10 +3257,14 @@
 <!-- ====== FOOTER ====== -->
 <footer>
   <div class="footer-grid">
-    <div class="footer-brand">
-      <h3>Colonial Concrete & Demolition</h3>
+    <div class="footer-brand" itemscope itemtype="https://schema.org/LocalBusiness">
+      <h3 itemprop="name">Colonial Concrete & Demolition</h3>
       <p>Concrete and demolition done the Chicago way — honest pricing, clean work, neighbor-grade craftsmanship. Serving Chicago, the North Shore, and DuPage County.</p>
-      <a href="tel:7086554925" class="footer-phone-link">
+      <address class="footer-nap" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" style="font-style: normal; line-height: 1.7; margin: 1rem 0; font-size: 0.95rem; color: var(--steel);">
+        <span itemprop="streetAddress">3227 N Western Ave</span><br>
+        <span itemprop="addressLocality">Chicago</span>, <span itemprop="addressRegion">IL</span> <span itemprop="postalCode">60618</span>
+      </address>
+      <a href="tel:7086554925" class="footer-phone-link" itemprop="telephone" content="+17086554925">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.21c.28-.26.36-.65.25-1C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>
         708-655-4925
       </a>
